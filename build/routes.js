@@ -8294,6 +8294,44 @@ export default {
     "description": "",
     "lang": "zh-CN"
   },
+  "aiblog-2xv": {
+    "routes": {
+      "/archives": {
+        "path": "/archives",
+        "categories": [
+          "blog"
+        ],
+        "example": "/aiblog-2xv/archives",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "aiblog-2xv.pages.dev/archives"
+            ],
+            "target": "/archives"
+          }
+        ],
+        "name": "归档-全部文章",
+        "maintainers": [
+          "Liao-Ke"
+        ],
+        "location": "archives.ts",
+        "module": () => import('@/routes/aiblog-2xv/archives.ts')
+      }
+    },
+    "name": "AI 博客",
+    "apiRoutes": {},
+    "url": "aiblog-2xv.pages.dev",
+    "lang": "zh-CN"
+  },
   "aicaijing": {
     "routes": {
       "/:category?/:id?": {
@@ -9026,7 +9064,8 @@ export default {
       "/information/:type?": {
         "path": "/information/:type?",
         "categories": [
-          "new-media"
+          "new-media",
+          "popular"
         ],
         "example": "/aliresearch/information",
         "parameters": {
@@ -16344,8 +16383,7 @@ export default {
           "hyoban"
         ],
         "categories": [
-          "social-media",
-          "popular"
+          "social-media"
         ],
         "view": 3,
         "example": "/bilibili/ranking/all",
@@ -26894,8 +26932,8 @@ export default {
   },
   "cnljxh": {
     "routes": {
-      "/news/:id?": {
-        "path": "/news/:id?",
+      "/:category?/:id?": {
+        "path": "/:category?/:id?",
         "name": "栏目",
         "url": "www.cnljxh.org.cn",
         "maintainers": [
@@ -26904,6 +26942,27 @@ export default {
         "example": "/cnljxh/news/10",
         "parameters": {
           "category": {
+            "description": "分类，默认为 `news`，即行业新闻，可在对应分类页 URL 中找到",
+            "options": [
+              {
+                "label": "行业新闻",
+                "value": "news"
+              },
+              {
+                "label": "市场价格",
+                "value": "price"
+              },
+              {
+                "label": "分析数据",
+                "value": "info"
+              },
+              {
+                "label": "价格指数",
+                "value": "date"
+              }
+            ]
+          },
+          "id": {
             "description": "分类，默认为 `10`，即协会公告，可在对应分类页 URL 中找到",
             "options": [
               {
@@ -27041,7 +27100,7 @@ export default {
             ]
           }
         },
-        "description": ":::tip\n订阅 [协会公告](https://www.cnljxh.org.cn/news/?classid=10)，其源网址为 `https://www.cnljxh.org.cn/news/?classid=10`，请参考该 URL 指定部分构成参数，此时路由为 [`/cnljxh/news/10`](https://rsshub.app/cnljxh/news/10)。\n:::\n\n<details>\n  <summary>更多分类</summary>\n\n  #### 协会专区\n\n  | [协会简介](https://www.cnljxh.org.cn/news/?classid=24) | [协会章程](https://www.cnljxh.org.cn/news/?classid=25) | [协会领导](https://www.cnljxh.org.cn/news/?classid=26) | [入会程序](https://www.cnljxh.org.cn/news/?classid=27) | [组织机构](https://www.cnljxh.org.cn/news/?classid=28) |\n  | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |\n  | [24](https://rsshub.app/cnljxh/news/24)                | [25](https://rsshub.app/cnljxh/news/25)                | [26](https://rsshub.app/cnljxh/news/26)                | [27](https://rsshub.app/cnljxh/news/27)                | [28](https://rsshub.app/cnljxh/news/28)                |\n\n  | [理事会员](https://www.cnljxh.org.cn/news/?classid=29) | [监事会](https://www.cnljxh.org.cn/news/?classid=32) | [专家委员会](https://www.cnljxh.org.cn/news/?classid=30) |\n  | ------------------------------------------------------ | ---------------------------------------------------- | -------------------------------------------------------- |\n  | [29](https://rsshub.app/cnljxh/news/29)                | [32](https://rsshub.app/cnljxh/news/32)              | [30](https://rsshub.app/cnljxh/news/30)                  |\n\n  #### 协会公告\n\n  | [协会公告](https://www.cnljxh.org.cn/news/?classid=10) |\n  | ------------------------------------------------------ |\n  | [10](https://rsshub.app/cnljxh/news/10)                |\n\n  #### 行业新闻\n\n  | [协会动态](https://www.cnljxh.org.cn/news/?classid=8) | [企业动态](https://www.cnljxh.org.cn/news/?classid=9) | [行业动态](https://www.cnljxh.org.cn/news/?classid=11) |\n  | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------ |\n  | [8](https://rsshub.app/cnljxh/news/8)                 | [9](https://rsshub.app/cnljxh/news/9)                 | [11](https://rsshub.app/cnljxh/news/11)                |\n\n  #### 政策法规\n\n  | [政策法规](https://www.cnljxh.org.cn/news/?classid=12) |\n  | ------------------------------------------------------ |\n  | [12](https://rsshub.app/cnljxh/news/12)                |\n\n  #### 行业标准\n\n  | [国家标准](https://www.cnljxh.org.cn/news/?classid=13) | [行业标准](https://www.cnljxh.org.cn/news/?classid=14) | [团体标准](https://www.cnljxh.org.cn/news/?classid=15) |\n  | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |\n  | [13](https://rsshub.app/cnljxh/news/13)                | [14](https://rsshub.app/cnljxh/news/14)                | [15](https://rsshub.app/cnljxh/news/15)                |\n\n  #### 减污降碳\n\n  | [超低排放](https://www.cnljxh.org.cn/news/indexdp.php?classid=33) | [技术广角](https://www.cnljxh.org.cn/news/?classid=16) |\n  | ----------------------------------------------------------------- | ------------------------------------------------------ |\n  | [33](https://rsshub.app/cnljxh/news/33)                           | [16](https://rsshub.app/cnljxh/news/16)                |\n\n  #### 市场价格\n\n  | [价格行情](https://www.cnljxh.org.cn/price/?classid=299) | [双焦运费](https://www.cnljxh.org.cn/price/?classid=2143) | [价格汇总](https://www.cnljxh.org.cn/collect/?classid=10039) |\n  | -------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------ |\n  | [299](https://rsshub.app/cnljxh/news/299)                | [2143](https://rsshub.app/cnljxh/news/2143)               | [10039](https://rsshub.app/cnljxh/news/10039)                |\n\n  #### 分析数据\n\n  | [市场分析](https://www.cnljxh.org.cn/info/?classid=575) | [一周评述](https://www.cnljxh.org.cn/info/?classid=5573) | [核心数据](https://www.cnljxh.org.cn/info/?classid=5417) |\n  | ------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |\n  | [575](https://rsshub.app/cnljxh/news/575)               | [5573](https://rsshub.app/cnljxh/news/5573)              | [5417](https://rsshub.app/cnljxh/news/5417)              |\n\n  #### 价格指数\n\n  | [焦炭指数(MyCpic)](https://www.cnljxh.org.cn/date/?classid=5575) | [炼焦煤指数(MyCpic)](https://www.cnljxh.org.cn/date/?classid=5907) | [山西焦炭价格指数（SCSPI）](https://www.cnljxh.org.cn/news/index.php?classid=34) | [中价·新华焦煤价格指数（CCP）](https://www.cnljxh.org.cn/news/index.php?classid=35) |\n  | ---------------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |\n  | [5575](https://rsshub.app/cnljxh/news/5575)                      | [5907](https://rsshub.app/cnljxh/news/5907)                        | [34](https://rsshub.app/cnljxh/news/34)                                          | [35](https://rsshub.app/cnljxh/news/35)                                             |\n\n  #### 市场信息\n\n  | [汾渭](https://www.cnljxh.org.cn/news/?classid=19) | [化工宝](https://www.cnljxh.org.cn/news/?classid=20) | [百川](https://www.cnljxh.org.cn/news/?classid=21) | [焦化市场信息](https://www.cnljxh.org.cn/news/?classid=22) | [中国焦化信息](https://www.cnljxh.org.cn/news/?classid=31) |\n  | -------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |\n  | [19](https://rsshub.app/cnljxh/news/19)            | [20](https://rsshub.app/cnljxh/news/20)              | [21](https://rsshub.app/cnljxh/news/21)            | [22](https://rsshub.app/cnljxh/news/22)                    | [31](https://rsshub.app/cnljxh/news/31)                    |\n\n</details>\n",
+        "description": ":::tip\n订阅 [协会公告](https://www.cnljxh.org.cn/news/?classid=10)，其源网址为 `https://www.cnljxh.org.cn/news/?classid=10`，请参考该 URL 指定部分构成参数，此时路由为 [`/cnljxh/news/10`](https://rsshub.app/cnljxh/news/10)。\n\n订阅 [价格行情](https://www.cnljxh.org.cn/price/?classid=299)，其源网址为 `https://www.cnljxh.org.cn/price/?classid=299`，请参考该 URL 指定部分构成参数，此时路由为 [`/cnljxh/price/299`](https://rsshub.app/cnljxh/price/299)。\n:::\n\n<details>\n  <summary>更多分类</summary>\n\n#### 协会专区\n\n| [协会简介](https://www.cnljxh.org.cn/news/?classid=24) | [协会章程](https://www.cnljxh.org.cn/news/?classid=25) | [协会领导](https://www.cnljxh.org.cn/news/?classid=26) | [入会程序](https://www.cnljxh.org.cn/news/?classid=27) | [组织机构](https://www.cnljxh.org.cn/news/?classid=28) |\n| ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |\n| [24](https://rsshub.app/cnljxh/news/24)                | [25](https://rsshub.app/cnljxh/news/25)                | [26](https://rsshub.app/cnljxh/news/26)                | [27](https://rsshub.app/cnljxh/news/27)                | [28](https://rsshub.app/cnljxh/news/28)                |\n\n| [理事会员](https://www.cnljxh.org.cn/news/?classid=29) | [监事会](https://www.cnljxh.org.cn/news/?classid=32) | [专家委员会](https://www.cnljxh.org.cn/news/?classid=30) |\n| ------------------------------------------------------ | ---------------------------------------------------- | -------------------------------------------------------- |\n| [29](https://rsshub.app/cnljxh/news/29)                | [32](https://rsshub.app/cnljxh/news/32)              | [30](https://rsshub.app/cnljxh/news/30)                  |\n\n#### 协会公告\n\n| [协会公告](https://www.cnljxh.org.cn/news/?classid=10) |\n| ------------------------------------------------------ |\n| [10](https://rsshub.app/cnljxh/news/10)                |\n\n#### 行业新闻\n\n| [协会动态](https://www.cnljxh.org.cn/news/?classid=8) | [企业动态](https://www.cnljxh.org.cn/news/?classid=9) | [行业动态](https://www.cnljxh.org.cn/news/?classid=11) |\n| ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------ |\n| [8](https://rsshub.app/cnljxh/news/8)                 | [9](https://rsshub.app/cnljxh/news/9)                 | [11](https://rsshub.app/cnljxh/news/11)                |\n\n#### 政策法规\n\n| [政策法规](https://www.cnljxh.org.cn/news/?classid=12) |\n| ------------------------------------------------------ |\n| [12](https://rsshub.app/cnljxh/news/12)                |\n\n#### 行业标准\n\n| [国家标准](https://www.cnljxh.org.cn/news/?classid=13) | [行业标准](https://www.cnljxh.org.cn/news/?classid=14) | [团体标准](https://www.cnljxh.org.cn/news/?classid=15) |\n| ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |\n| [13](https://rsshub.app/cnljxh/news/13)                | [14](https://rsshub.app/cnljxh/news/14)                | [15](https://rsshub.app/cnljxh/news/15)                |\n\n#### 减污降碳\n\n| [超低排放](https://www.cnljxh.org.cn/news/indexdp.php?classid=33) | [技术广角](https://www.cnljxh.org.cn/news/?classid=16) |\n| ----------------------------------------------------------------- | ------------------------------------------------------ |\n| [33](https://rsshub.app/cnljxh/news/33)                           | [16](https://rsshub.app/cnljxh/news/16)                |\n\n#### 市场价格\n\n| [价格行情](https://www.cnljxh.org.cn/price/?classid=299) | [双焦运费](https://www.cnljxh.org.cn/price/?classid=2143) | [价格汇总](https://www.cnljxh.org.cn/collect/?classid=10039) |\n| -------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------ |\n| [299](https://rsshub.app/cnljxh/price/299)               | [2143](https://rsshub.app/cnljxh/price/2143)              | [10039](https://rsshub.app/cnljxh/price/10039)               |\n\n#### 分析数据\n\n| [市场分析](https://www.cnljxh.org.cn/info/?classid=575) | [一周评述](https://www.cnljxh.org.cn/info/?classid=5573) | [核心数据](https://www.cnljxh.org.cn/info/?classid=5417) |\n| ------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |\n| [575](https://rsshub.app/cnljxh/info/575)               | [5573](https://rsshub.app/cnljxh/info/5573)              | [5417](https://rsshub.app/cnljxh/info/5417)              |\n\n#### 价格指数\n\n| [焦炭指数(MyCpic)](https://www.cnljxh.org.cn/date/?classid=5575) | [炼焦煤指数(MyCpic)](https://www.cnljxh.org.cn/date/?classid=5907) | [山西焦炭价格指数（SCSPI）](https://www.cnljxh.org.cn/news/index.php?classid=34) | [中价·新华焦煤价格指数（CCP）](https://www.cnljxh.org.cn/news/index.php?classid=35) |\n| ---------------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |\n| [5575](https://rsshub.app/cnljxh/date/5575)                      | [5907](https://rsshub.app/cnljxh/date/5907)                        | [34](https://rsshub.app/cnljxh/news/34)                                          | [35](https://rsshub.app/cnljxh/news/35)                                             |\n\n#### 市场信息\n\n| [汾渭](https://www.cnljxh.org.cn/news/?classid=19) | [化工宝](https://www.cnljxh.org.cn/news/?classid=20) | [百川](https://www.cnljxh.org.cn/news/?classid=21) | [焦化市场信息](https://www.cnljxh.org.cn/news/?classid=22) | [中国焦化信息](https://www.cnljxh.org.cn/news/?classid=31) |\n| -------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |\n| [19](https://rsshub.app/cnljxh/news/19)            | [20](https://rsshub.app/cnljxh/news/20)              | [21](https://rsshub.app/cnljxh/news/21)            | [22](https://rsshub.app/cnljxh/news/22)                    | [31](https://rsshub.app/cnljxh/news/31)                    |\n\n</details>\n",
         "categories": [
           "new-media"
         ],
@@ -27057,7 +27116,7 @@ export default {
         "radar": [
           {
             "source": [
-              "www.cnljxh.org.cn/news"
+              "www.cnljxh.org.cn/:category"
             ]
           },
           {
@@ -27191,56 +27250,56 @@ export default {
             "source": [
               "www.cnljxh.org.cn/price/?classid=299"
             ],
-            "target": "/news/299"
+            "target": "/price/299"
           },
           {
             "title": "市场价格 - 双焦运费",
             "source": [
               "www.cnljxh.org.cn/price/?classid=2143"
             ],
-            "target": "/news/2143"
+            "target": "/price/2143"
           },
           {
             "title": "市场价格 - 价格汇总",
             "source": [
               "www.cnljxh.org.cn/collect/?classid=10039"
             ],
-            "target": "/news/10039"
+            "target": "/price/10039"
           },
           {
             "title": "分析数据 - 市场分析",
             "source": [
               "www.cnljxh.org.cn/info/?classid=575"
             ],
-            "target": "/news/575"
+            "target": "/info/575"
           },
           {
             "title": "分析数据 - 一周评述",
             "source": [
               "www.cnljxh.org.cn/info/?classid=5573"
             ],
-            "target": "/news/5573"
+            "target": "/info/5573"
           },
           {
             "title": "分析数据 - 核心数据",
             "source": [
               "www.cnljxh.org.cn/info/?classid=5417"
             ],
-            "target": "/news/5417"
+            "target": "/info/5417"
           },
           {
             "title": "价格指数 - 焦炭指数(MyCpic)",
             "source": [
               "www.cnljxh.org.cn/date/?classid=5575"
             ],
-            "target": "/news/5575"
+            "target": "/date/5575"
           },
           {
             "title": "价格指数 - 炼焦煤指数(MyCpic)",
             "source": [
               "www.cnljxh.org.cn/date/?classid=5907"
             ],
-            "target": "/news/5907"
+            "target": "/date/5907"
           },
           {
             "title": "价格指数 - 山西焦炭价格指数（SCSPI）",
