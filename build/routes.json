@@ -9064,8 +9064,7 @@
       "/information/:type?": {
         "path": "/information/:type?",
         "categories": [
-          "new-media",
-          "popular"
+          "new-media"
         ],
         "example": "/aliresearch/information",
         "parameters": {
@@ -25953,7 +25952,8 @@
       "/telegraph/:category?": {
         "path": "/telegraph/:category?",
         "categories": [
-          "finance"
+          "finance",
+          "popular"
         ],
         "example": "/cls/telegraph",
         "parameters": {
@@ -47563,6 +47563,51 @@
         ],
         "location": "news.ts",
         "module": "() => import('@/routes/google/news.ts')"
+      },
+      "/play/:id/:lang?": {
+        "name": "Play Store Update",
+        "path": "/play/:id/:lang?",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/google/play/net.dinglisch.android.taskerm",
+        "parameters": {
+          "id": "Package id, can be found in url",
+          "lang": {
+            "description": "language",
+            "options": [
+              {
+                "value": "en-us",
+                "label": "English"
+              },
+              {
+                "value": "zh-cn",
+                "label": "简体中文"
+              }
+            ],
+            "default": "en-us"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "play.google.com/store/apps/details?id=:id"
+            ]
+          }
+        ],
+        "maintainers": [
+          "surwall"
+        ],
+        "location": "play.ts",
+        "module": "() => import('@/routes/google/play.ts')"
       },
       "/research": {
         "path": "/research",
