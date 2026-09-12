@@ -1,11 +1,13 @@
-import logger from '@/utils/logger';
-import { config } from '@/config';
-import undici, { Request, RequestInfo, RequestInit } from 'undici';
-import proxy from '@/utils/proxy';
-import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
-import { useRegisterRequest } from 'node-network-devtools';
-import { generateHeaders, generatedHeaders as HEADER_LIST } from '@/utils/header-generator';
 import type { HeaderGeneratorOptions } from 'header-generator';
+import { useRegisterRequest } from 'node-network-devtools';
+import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
+import type { RequestInfo, RequestInit, Response } from 'undici';
+import undici, { Request } from 'undici';
+
+import { config } from '@/config';
+import { generatedHeaders as HEADER_LIST, generateHeaders } from '@/utils/header-generator';
+import logger from '@/utils/logger';
+import proxy from '@/utils/proxy';
 
 const limiter = new RateLimiterMemory({
     points: 10,
@@ -17,10 +19,10 @@ const limiterQueue = new RateLimiterQueue(limiter, {
     maxQueueSize: 4800,
 });
 
-export const useCustomHeader = (headers: Headers) => {
+export const useCustomHeader = (headers: Iterable<[string, string]>) => {
     process.env.NODE_ENV === 'dev' &&
         useRegisterRequest((req) => {
-            for (const [key, value] of headers.entries()) {
+            for (const [key, value] of headers) {
                 req.requestHeaders[key] = value;
             }
             return req;
@@ -33,17 +35,22 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
 
     logger.debug(`Outgoing request: ${request.method} ${request.url}`);
 
-    const generatedHeaders = generateHeaders(init?.headerGeneratorOptions);
-
     // ua
-    if (!request.headers.has('user-agent')) {
-        request.headers.set('user-agent', config.ua);
-    }
+    if (config.isDefaultUA || init?.headerGeneratorOptions) {
+        const generatedHeaders = generateHeaders(init?.headerGeneratorOptions);
 
-    for (const header of HEADER_LIST) {
-        if (!request.headers.has(header) && generatedHeaders[header]) {
-            request.headers.set(header, generatedHeaders[header]);
+        if (!request.headers.get('user-agent')) {
+            request.headers.set('user-agent', generatedHeaders['user-agent']);
         }
+
+        for (const header of HEADER_LIST) {
+            const headerValue = generatedHeaders[header];
+            if (!request.headers.has(header) && headerValue) {
+                request.headers.set(header, headerValue);
+            }
+        }
+    } else if (!request.headers.get('user-agent')) {
+        request.headers.set('user-agent', config.ua);
     }
 
     // referer
@@ -108,11 +115,10 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
                         }
                         logger.debug(`Retrying request with proxy ${nextProxy.uri}: ${request.url}`);
                         return attemptRequest(attempt + 1);
-                    } else {
-                        logger.warn('No more proxies available, trying without proxy');
-                        delete options.dispatcher;
-                        return attemptRequest(attempt + 1);
                     }
+                    logger.warn('No more proxies available, trying without proxy');
+                    delete options.dispatcher;
+                    return attemptRequest(attempt + 1);
                 }
             }
             throw error;
